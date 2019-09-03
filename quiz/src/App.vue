@@ -40,6 +40,18 @@ export default {
   methods: {
     next() {
       this.index++
+      if( this.index %10 == 0) {
+        fetch('https://opentdb.com/api.php?amount=10&type=multiple', {
+        method: 'get'
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .then((jsonData) => {
+        this.questions = jsonData.results
+        this.index = 0
+      })
+      }
     },
     increment(isCorrect) {
       if(isCorrect) {
@@ -50,14 +62,14 @@ export default {
   },
   mounted: function() {
      fetch('https://opentdb.com/api.php?amount=10&type=multiple', {
-       method: 'get'
-     })
-     .then((response) => {
-       return response.json()
-     })
-     .then((jsonData) => {
-       this.questions = jsonData.results
-     })
+        method: 'get'
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .then((jsonData) => {
+        this.questions = jsonData.results
+      })
   }
 }
 </script>
